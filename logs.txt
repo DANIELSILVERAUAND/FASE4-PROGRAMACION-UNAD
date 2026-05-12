@@ -1,0 +1,66 @@
+2026-05-12 10:26:09,788 - ERROR - El cliente debe ser mayor de edad
+2026-05-12 10:26:09,789 - ERROR - El nombre no puede estar vac�o
+2026-05-12 10:26:09,789 - ERROR - Las horas deben ser mayores a 0
+2026-05-12 10:26:09,789 - ERROR - Debe existir un cliente
+2026-05-12 10:26:09,790 - ERROR - La edad debe ser num�rica
+2026-05-12 10:26:09,790 - ERROR - Los d�as deben ser mayores a 0
+2026-05-12 10:38:44,318 - ERROR - El cliente debe ser mayor de edad
+2026-05-12 10:38:44,319 - ERROR - El nombre no puede estar vac�o
+2026-05-12 10:38:44,319 - ERROR - Las horas deben ser mayores a 0
+2026-05-12 10:38:44,320 - ERROR - Debe existir un cliente
+2026-05-12 10:38:44,321 - ERROR - La edad debe ser num�rica
+2026-05-12 10:38:44,321 - ERROR - Los d�as deben ser mayores a 0
+2026-05-12 11:25:47,551 - ERROR - El cliente debe ser mayor de edad
+2026-05-12 11:25:47,551 - ERROR - El nombre no puede estar vac�o
+2026-05-12 11:25:47,552 - ERROR - Las horas deben ser mayores a 0
+2026-05-12 11:25:47,553 - ERROR - Debe existir un cliente
+2026-05-12 11:25:47,553 - ERROR - La edad debe ser num�rica
+2026-05-12 11:25:47,553 - ERROR - Los d�as deben ser mayores a 0
+2026-05-12 11:26:18,987 - ERROR - El cliente debe ser mayor de edad
+2026-05-12 11:26:18,988 - ERROR - El nombre no puede estar vac�o
+2026-05-12 11:26:18,988 - ERROR - Las horas deben ser mayores a 0
+2026-05-12 11:26:18,989 - ERROR - Debe existir un cliente
+2026-05-12 11:26:18,989 - ERROR - La edad debe ser num�rica
+2026-05-12 11:26:18,989 - ERROR - Los d�as deben ser mayores a 0
+2026-05-12 11:30:11,883 - ERROR - El cliente debe ser mayor de edad
+2026-05-12 11:30:11,884 - ERROR - El nombre no puede estar vac�o
+2026-05-12 11:30:11,884 - ERROR - Las horas deben ser mayores a 0
+2026-05-12 11:30:11,885 - ERROR - Debe existir un cliente
+2026-05-12 11:30:11,885 - ERROR - La edad debe ser num�rica
+2026-05-12 11:30:11,886 - ERROR - Los d�as deben ser mayores a 0
+2026-05-12 11:58:38,570 - ERROR - El cliente debe ser mayor de edad
+2026-05-12 11:58:38,570 - ERROR - El nombre no puede estar vac�o
+2026-05-12 11:58:38,570 - ERROR - Las horas deben ser mayores a 0
+2026-05-12 11:58:38,571 - ERROR - Debe existir un cliente
+2026-05-12 11:58:38,572 - ERROR - La edad debe ser num�rica
+2026-05-12 11:58:38,572 - ERROR - Los d�as deben ser mayores a 0
+2026-05-12 12:00:05,358 - ERROR - El cliente debe ser mayor de edad
+2026-05-12 12:00:05,359 - ERROR - El nombre no puede estar vac�o
+2026-05-12 12:00:05,359 - ERROR - Las horas deben ser mayores a 0
+2026-05-12 12:00:05,360 - ERROR - Debe existir un cliente
+2026-05-12 12:00:05,360 - ERROR - La edad debe ser num�rica
+2026-05-12 12:00:05,360 - ERROR - Los d�as deben ser mayores a 0
+2026-05-12 12:00:53,282 - ERROR - El cliente debe ser mayor de edad
+2026-05-12 12:00:53,282 - ERROR - El nombre no puede estar vac�o
+2026-05-12 12:00:53,283 - ERROR - Las horas deben ser mayores a 0
+2026-05-12 12:00:53,283 - ERROR - Debe existir un cliente
+2026-05-12 12:00:53,284 - ERROR - La edad debe ser num�rica
+2026-05-12 12:00:53,284 - ERROR - Los d�as deben ser mayores a 0
+2026-05-12 12:03:09,423 - ERROR - El cliente debe ser mayor de edad
+2026-05-12 12:03:09,424 - ERROR - El nombre no puede estar vac�o
+2026-05-12 12:03:09,424 - ERROR - Las horas deben ser mayores a 0
+2026-05-12 12:03:09,425 - ERROR - Debe existir un cliente
+2026-05-12 12:03:09,425 - ERROR - La edad debe ser num�rica
+2026-05-12 12:03:09,425 - ERROR - Los d�as deben ser mayores a 0
+2026-05-12 12:04:57,118 - ERROR - El cliente debe ser mayor de edad
+2026-05-12 12:04:57,119 - ERROR - El nombre no puede estar vac�o
+2026-05-12 12:04:57,119 - ERROR - Las horas deben ser mayores a 0
+2026-05-12 12:04:57,120 - ERROR - Debe existir un cliente
+2026-05-12 12:04:57,120 - ERROR - La edad debe ser num�rica
+2026-05-12 12:04:57,121 - ERROR - Los d�as deben ser mayores a 0
+2026-05-12 12:05:19,948 - ERROR - El cliente debe ser mayor de edad
+2026-05-12 12:05:19,949 - ERROR - El nombre no puede estar vac�o
+2026-05-12 12:05:19,949 - ERROR - Las horas deben ser mayores a 0
+2026-05-12 12:05:19,950 - ERROR - Debe existir un cliente
+2026-05-12 12:05:19,951 - ERROR - La edad debe ser num�rica
+2026-05-12 12:05:19,951 - ERROR - Los d�as deben ser mayores a 0
