@@ -1,6 +1,7 @@
 # Sistema de Gestión - Software FJ
 
-Proyecto desarrollado en Python para la fase 4 del curso Programación 213023 de la UNAD.
+Proyecto desarrollado en Python para la fase 4 del curso Programación 213023A_2201 de la UNAD.
+Estudiantes: DANIEL SILVERA GUTIERREZ, HENRY MARTINEZ ALVAREZ
 
 ## Características
 
