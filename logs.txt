@@ -64,3 +64,13 @@
 2026-05-12 12:05:19,950 - ERROR - Debe existir un cliente
 2026-05-12 12:05:19,951 - ERROR - La edad debe ser numï¿½rica
 2026-05-12 12:05:19,951 - ERROR - Los dï¿½as deben ser mayores a 0
+2026-05-12 19:35:55,711 - INFO - Simulación 1 completada exitosamente
+2026-05-12 19:35:55,711 - ERROR - Error de Cliente en simulación 2: El cliente debe ser mayor de edad
+2026-05-12 19:35:55,712 - ERROR - Error de Cliente en simulación 3: El nombre no puede estar vacío
+2026-05-12 19:35:55,713 - ERROR - Error de Servicio en simulación 4: Las horas deben ser mayores a 0
+2026-05-12 19:35:55,713 - INFO - Simulación 5 completada exitosamente
+2026-05-12 19:35:55,714 - INFO - Simulación 6 completada exitosamente
+2026-05-12 19:35:55,714 - ERROR - Error de Reserva en simulación 7: Debe existir un cliente para crear una reserva
+2026-05-12 19:35:55,715 - ERROR - Error de Cliente en simulación 8: La edad debe ser numérica
+2026-05-12 19:35:55,715 - ERROR - Error de Servicio en simulación 9: Los días deben ser mayores a 0
+2026-05-12 19:35:55,716 - INFO - Simulación 10 completada exitosamente
