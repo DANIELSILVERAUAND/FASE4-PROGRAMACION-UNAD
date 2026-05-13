@@ -10,35 +10,47 @@ Estudiantes: DANIEL SILVERA GUTIERREZ, HENRY MARTINEZ ALVAREZ
 - Herencia
 - Polimorfismo
 - Encapsulación
-- Clase abstracta
+- Clases abstractas y contratos comunes
 
 ### Gestión de Errores
-- Excepciones personalizadas (ClienteError, ServicioError, ReservaError)
-- Manejo específico de errores por tipo
-- Sistema de logs detallado
-- Validaciones robustas en todas las operaciones
+- Excepciones personalizadas: ClienteError, ServicioError, ReservaError y subclases especializadas
+- Manejo robusto con bloques try/except, try/except/else y try/except/finally
+- Encadenamiento de excepciones con raise ... from e
+- Registro de errores y eventos en archivo de logs
+
+### Cliente y Entidades
+- Clase abstracta EntidadSistema
+- Clase Cliente con encapsulación de datos privados
+- Validaciones estrictas de identificación, nombre, email y teléfono
+- Propiedades y métodos bien definidos
+
+### Servicios
+- Clase abstracta Servicio con polimorfismo
+- Servicios especializados: ReservaSala, AlquilerEquipo, Asesoria
+- Métodos sobrescritos para cálculo de costo, descripción y duración base
+- Disponibilidad de servicio controlada con estado disponible/no disponible
+- Cálculo con parámetros opcionales: impuesto y descuento
 
 ### Sistema de Reservas
-- ID único generado automáticamente para cada reserva
+- ID único generado automáticamente
 - Duración configurable por reserva
-- Cálculo automático de costo total (costo base × duración)
-- Fecha y hora de creación de cada reserva
-- Estados de reserva: Pendiente, Confirmada, Cancelada
-- Validación completa de datos antes de confirmar
-- Contador de reservas creadas
+- Estados de reserva: PENDIENTE, CONFIRMADA, CANCELADA, PROCESADA
+- Operaciones de confirmación, cancelación y procesamiento
+- Manejo avanzado de excepciones en el flujo de reservas
+- Validación de datos y protección contra operaciones no permitidas
 
 ### Interfaz de Usuario
-- Menú interactivo con 5 opciones
+- Menú interactivo con validación de entrada
 - Opción para visualizar logs del sistema
 - Visualización de clientes registrados
-- Visualización de reservas confirmadas
-- Ejecución de 10 simulaciones (5 exitosas, 5 con errores esperados)
+- Visualización de reservas registradas
+- Ejecución de simulaciones con casos válidos e inválidos
 
 ### Sistema de Simulaciones
-- 10 simulaciones completas que prueban diferentes escenarios
-- Casos de éxito y casos de error controlados
-- Registro detallado de cada simulación en logs
-- Mensajes de error específicos y diferenciados
+- Simulaciones que muestran reservas exitosas y fallidas
+- Casos de datos inválidos, servicios no disponibles y confirmaciones repetidas
+- Registro de cada evento y error en el archivo de logs
+- El programa continúa funcionando aún si una simulación falla
 
 ## Ejecución
 
