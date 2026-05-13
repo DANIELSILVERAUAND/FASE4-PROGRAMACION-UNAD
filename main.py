@@ -165,7 +165,8 @@ def menu():
         print("1. Ejecutar simulaciones")
         print("2. Ver clientes registrados")
         print("3. Ver reservas registradas")
-        print("4. Salir")
+        print("4. Ver logs")
+        print("5. Salir")
 
         opcion = input("Seleccione una opción: ")
 
@@ -215,6 +216,20 @@ def menu():
                     print(reserva.mostrar_reserva())
 
         elif opcion == "4":
+
+            print("\n===== LOGS DEL SISTEMA =====")
+
+            try:
+                with open("logs.txt", "r") as archivo:
+                    contenido = archivo.read()
+                    if contenido:
+                        print(contenido)
+                    else:
+                        print("No hay registros de logs")
+            except FileNotFoundError:
+                print("Archivo de logs no encontrado")
+
+        elif opcion == "5":
 
             print("\n===== FIN DEL SISTEMA =====")
             break

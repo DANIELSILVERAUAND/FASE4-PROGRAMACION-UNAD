@@ -1,0 +1,66 @@
+[33mcommit d4119704f8c4580db24e167ca83575530ab5827a[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Merge: 224730d 02f1552
+Author: hdmartineza <hdmartineza@unadvirtual.edu.co>
+Date:   Tue May 12 18:55:13 2026 -0500
+
+    Merge branch 'main' of https://github.com/DANIELSILVERAUAND/FASE4-PROGRAMACION-UNAD
+
+[33mcommit 224730dbccaf712681cf4225a89d06f3348dcfcb[m
+Author: hdmartineza <hdmartineza@unadvirtual.edu.co>
+Date:   Tue May 12 18:48:49 2026 -0500
+
+    Primer commit
+
+[33mcommit 02f1552e17b543245bc89b0672f92322de66c21d[m
+Author: DANIELSILVERAUAND <silveragutierrezdanielandres@gmail.com>
+Date:   Tue May 12 15:45:53 2026 -0500
+
+    Update README.md
+
+[33mcommit c48fddd578b03932a06b9c7e3c79d389484d952c[m
+Author: Daniel Silvera <silveragutierrezdanielandres@gmail.com>
+Date:   Tue May 12 14:56:28 2026 -0500
+
+    Creacion de documentacion del proyecto
+
+[33mcommit db58a10095a1092511c96f3888beeba89b72bbb7[m
+Author: Daniel Silvera <silveragutierrezdanielandres@gmail.com>
+Date:   Tue May 12 14:53:56 2026 -0500
+
+    Implementacion del menu interactivo y simulaciones
+
+[33mcommit b09cc3839a43639d86c1bc81661858da96a70229[m
+Author: Daniel Silvera <silveragutierrezdanielandres@gmail.com>
+Date:   Tue May 12 14:53:40 2026 -0500
+
+    Configuracion del sistema de logs
+
+[33mcommit e491a7f02653ec6d83b9fc7654146c47d8f7fe30[m
+Author: Daniel Silvera <silveragutierrezdanielandres@gmail.com>
+Date:   Tue May 12 14:52:59 2026 -0500
+
+    Implementacion del sistema de reservas
+
+[33mcommit fe907684285a9af7c50fb8eeabafe45243367c13[m
+Author: Daniel Silvera <silveragutierrezdanielandres@gmail.com>
+Date:   Tue May 12 14:52:33 2026 -0500
+
+    Creacion clase Cliente con encapsulacion
+
+[33mcommit 910f29000a77706b5cb2f8b6034c4739a27fd01a[m
+Author: Daniel Silvera <silveragutierrezdanielandres@gmail.com>
+Date:   Tue May 12 14:52:18 2026 -0500
+
+    Implementacion de herencia y polimorfismo
+
+[33mcommit 8269efcd48b13a6584ba36adf874bb1f868ee2c7[m
+Author: Daniel Silvera <silveragutierrezdanielandres@gmail.com>
+Date:   Tue May 12 14:52:08 2026 -0500
+
+    Creacion de clase abstracta Servicio
+
+[33mcommit fdc6ba36abad8ba965f051f71b7163741c380900[m
+Author: Daniel Silvera <silveragutierrezdanielandres@gmail.com>
+Date:   Tue May 12 14:51:48 2026 -0500
+
+    Implementacion de excepciones personalizadas
