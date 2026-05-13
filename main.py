@@ -220,12 +220,13 @@ def menu():
         print("2. Ver clientes registrados")
         print("3. Ver reservas registradas")
         print("4. Ver logs")
-        print("5. Salir")
+        print("5. Borrar logs")
+        print("6. Salir")
 
         opcion = input("Seleccione una opción: ").strip()
 
-        if not opcion.isdigit() or opcion not in {"1", "2", "3", "4", "5"}:
-            print("Opción inválida. Por favor ingrese un número entre 1 y 5.")
+        if not opcion.isdigit() or opcion not in {"1", "2", "3", "4", "5", "6"}:
+            print("Opción inválida. Por favor ingrese un número entre 1 y 6.")
             continue
 
         if opcion == "1":
@@ -289,6 +290,18 @@ def menu():
                 print("Archivo de logs no encontrado")
 
         elif opcion == "5":
+
+            print("\n===== BORRAR LOGS =====")
+
+            try:
+                with open("logs.txt", "w") as archivo:
+                    archivo.write("")
+                print("Logs borrados correctamente")
+            except Exception as e:
+                print("No se pudo borrar el archivo de logs:", e)
+                logging.error(f"Error al borrar logs: {e}")
+
+        elif opcion == "6":
 
             print("\n===== FIN DEL SISTEMA =====")
             break
