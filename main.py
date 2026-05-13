@@ -52,10 +52,8 @@ def ejecutar_simulacion(numero, funcion):
 
 def simulacion_1():
 
-    cliente = Cliente("Daniel", 25)
-
+    cliente = Cliente("1001", "Daniel Silva", "daniel.silva@example.com", "3101234567")
     servicio = ReservaSala(3)
-
     reserva = Reserva(cliente, servicio, duracion=2)
 
     reserva.confirmar()
@@ -66,16 +64,15 @@ def simulacion_1():
     print(reserva.mostrar_reserva())
 
 
-# SIMULACIÓN 2 - Cliente menor de edad intenta reservar
+# SIMULACIÓN 2 - Reserva editable antes de confirmar
 
 def simulacion_2():
 
-    cliente = Cliente("Pedro", 15)
-
+    cliente = Cliente("1002", "Pedro Pérez", "pedro.perez@example.com", "3109876543")
     servicio = ReservaSala(2)
-
     reserva = Reserva(cliente, servicio, duracion=1)
 
+    reserva.modificar_duracion(4)
     reserva.confirmar()
 
     clientes.append(cliente)
@@ -88,34 +85,31 @@ def simulacion_2():
 
 def simulacion_3():
 
-    cliente = Cliente("", 20)
-
+    cliente = Cliente("1003", "", "carla@example.com", "3123456789")
     servicio = ReservaSala(1)
+    reserva = Reserva(cliente, servicio, duracion=1)
 
-    reserva = Reserva(cliente, servicio)
-
-    raise ClienteError("El nombre del cliente no puede estar vacío")
+    print(reserva.mostrar_reserva())
 
 
-# SIMULACIÓN 4 - Duración inválida (error esperado)
+# SIMULACIÓN 4 - Servicio no disponible (error esperado)
 
 def simulacion_4():
 
-    cliente = Cliente("Carlos", 30)
+    cliente = Cliente("1004", "Carlos López", "carlos.lopez@example.com", "3123456789")
+    servicio = ReservaSala(2)
+    servicio.disponible = False
+    reserva = Reserva(cliente, servicio, duracion=1)
 
-    servicio = ReservaSala(0)
-
-    raise ServicioError("La duración del servicio debe ser mayor a 0")
+    reserva.confirmar()
 
 
 # SIMULACIÓN 5 - Reserva de alquiler de equipo
 
 def simulacion_5():
 
-    cliente = Cliente("Laura", 30)
-
+    cliente = Cliente("1005", "Laura Martínez", "laura.martinez@example.com", "3151234567")
     servicio = AlquilerEquipo(5)
-
     reserva = Reserva(cliente, servicio, duracion=3)
 
     reserva.confirmar()
@@ -130,10 +124,8 @@ def simulacion_5():
 
 def simulacion_6():
 
-    cliente = Cliente("Maria", 28)
-
+    cliente = Cliente("1006", "María Gómez", "maria.gomez@example.com", "3141234567")
     servicio = Asesoria(2)
-
     reserva = Reserva(cliente, servicio, duracion=1)
 
     reserva.cancelar()
@@ -144,50 +136,72 @@ def simulacion_6():
     print(reserva.mostrar_reserva())
 
 
-# SIMULACIÓN 7 - Cliente None (error esperado)
+# SIMULACIÓN 7 - Servicio None (error esperado)
 
 def simulacion_7():
 
-    servicio = ReservaSala(2)
+    cliente = Cliente("1007", "Andrés Ruiz", "andres.ruiz@example.com", "3159876543")
+    reserva = Reserva(cliente, None, duracion=1)
 
-    reserva = Reserva(None, servicio)
-
-    reserva.confirmar()
+    print(reserva.mostrar_reserva())
 
 
-# SIMULACIÓN 8 - Edad inválida (error esperado)
+# SIMULACIÓN 8 - Servicio con duración inválida (error esperado)
 
 def simulacion_8():
 
-    cliente = Cliente("Carlos", "veinte")
+    cliente = Cliente("1008", "Carlos Álvarez", "carlos.alvarez@example.com", "3161234567")
+    servicio = AlquilerEquipo(-5)
+    reserva = Reserva(cliente, servicio, duracion=1)
 
-    servicio = ReservaSala(2)
-
-    reserva = Reserva(cliente, servicio)
+    print(reserva.mostrar_reserva())
 
 
-# SIMULACIÓN 9 - Duración negativa (error esperado)
+# SIMULACIÓN 9 - Confirmación repetida (error esperado)
 
 def simulacion_9():
 
-    cliente = Cliente("Roberto", 35)
+    cliente = Cliente("1009", "Roberto Díaz", "roberto.diaz@example.com", "3171234567")
+    servicio = ReservaSala(2)
+    reserva = Reserva(cliente, servicio, duracion=1)
 
-    servicio = AlquilerEquipo(-5)
+    reserva.confirmar()
+    reserva.confirmar()
 
-    reserva = Reserva(cliente, servicio)
+    clientes.append(cliente)
+    reservas.append(reserva)
+
+    print(reserva.mostrar_reserva())
 
 
-# SIMULACIÓN 10 - Reserva con asesoría exitosa
+# SIMULACIÓN 10 - Cálculo con impuesto y descuento
 
 def simulacion_10():
 
-    cliente = Cliente("Andrea", 40)
+    cliente = Cliente("1011", "Valeria Ortiz", "valeria.ortiz@example.com", "3191234567")
+    servicio = Asesoria(2)
+    costo = servicio.calcular_costo(impuesto=10, descuento=5)
 
-    servicio = Asesoria(3)
+    print(f"Costo con impuesto y descuento: ${costo:.2f}")
 
     reserva = Reserva(cliente, servicio, duracion=2)
-
     reserva.confirmar()
+
+    clientes.append(cliente)
+    reservas.append(reserva)
+
+    print(reserva.mostrar_reserva())
+
+
+# SIMULACIÓN 11 - Reserva procesada exitosamente
+
+def simulacion_11():
+
+    cliente = Cliente("1010", "Andrea Rincón", "andrea.rincon@example.com", "3181234567")
+    servicio = Asesoria(3)
+    reserva = Reserva(cliente, servicio, duracion=2)
+
+    reserva.procesar()
 
     clientes.append(cliente)
     reservas.append(reserva)
@@ -208,7 +222,11 @@ def menu():
         print("4. Ver logs")
         print("5. Salir")
 
-        opcion = input("Seleccione una opción: ")
+        opcion = input("Seleccione una opción: ").strip()
+
+        if not opcion.isdigit() or opcion not in {"1", "2", "3", "4", "5"}:
+            print("Opción inválida. Por favor ingrese un número entre 1 y 5.")
+            continue
 
         if opcion == "1":
 
@@ -226,6 +244,7 @@ def menu():
             ejecutar_simulacion(8, simulacion_8)
             ejecutar_simulacion(9, simulacion_9)
             ejecutar_simulacion(10, simulacion_10)
+            ejecutar_simulacion(11, simulacion_11)
 
         elif opcion == "2":
 

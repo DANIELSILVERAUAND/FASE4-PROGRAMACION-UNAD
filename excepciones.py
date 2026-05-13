@@ -8,3 +8,19 @@ class ServicioError(Exception):
 
 class ReservaError(Exception):
     pass
+
+
+class ReservaYaConfirmadaError(ReservaError):
+    pass
+
+
+class ReservaYaCanceladaError(ReservaError):
+    pass
+
+
+class ServicioNoDisponibleError(ReservaError):
+    pass
+
+
+class CalculoCostoError(ReservaError):
+    pass

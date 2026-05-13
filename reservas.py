@@ -1,6 +1,21 @@
-from excepciones import ReservaError
+from excepciones import (
+    ReservaError,
+    ReservaYaConfirmadaError,
+    ReservaYaCanceladaError,
+    ServicioNoDisponibleError,
+    CalculoCostoError,
+)
 from datetime import datetime
+from enum import Enum
 import uuid
+
+
+class EstadoReserva(str, Enum):
+    PENDIENTE = "PENDIENTE"
+    CONFIRMADA = "CONFIRMADA"
+    CANCELADA = "CANCELADA"
+    PROCESADA = "PROCESADA"
+
 
 class Reserva:
     """
@@ -19,17 +34,6 @@ class Reserva:
     contador_reservas = 0
 
     def __init__(self, cliente, servicio, duracion=1):
-        """
-        Inicializa una nueva reserva.
-
-        Args:
-            cliente: Objeto Cliente
-            servicio: Objeto Servicio
-            duracion: Duración de la reserva (default: 1)
-
-        Raises:
-            ReservaError: Si cliente o servicio son None
-        """
         if cliente is None:
             raise ReservaError("Debe existir un cliente para crear una reserva")
 
@@ -43,19 +47,14 @@ class Reserva:
         self.cliente = cliente
         self.servicio = servicio
         self.duracion = duracion
-        self.estado = "Pendiente"
+        self.estado = EstadoReserva.PENDIENTE
         self.fecha_creacion = datetime.now()
+        self.fecha_procesamiento = None
         self.costo_total = None
 
         Reserva.contador_reservas += 1
 
     def validar_reserva(self):
-        """
-        Valida que la reserva tenga todos los datos necesarios.
-
-        Raises:
-            ReservaError: Si la reserva no es válida
-        """
         if self.cliente is None:
             raise ReservaError("Cliente no válido")
 
@@ -68,72 +67,112 @@ class Reserva:
         return True
 
     def confirmar(self):
-        """
-        Confirma la reserva y calcula el costo total.
-
-        Raises:
-            ReservaError: Si no se puede confirmar la reserva
-        """
         try:
             self.validar_reserva()
-            self.estado = "Confirmada"
+
+            if self.estado == EstadoReserva.CONFIRMADA:
+                raise ReservaYaConfirmadaError("La reserva ya fue confirmada")
+
+            if self.estado == EstadoReserva.CANCELADA:
+                raise ReservaYaCanceladaError("No se puede confirmar una reserva cancelada")
+
+            if not getattr(self.servicio, "esta_disponible", lambda: True)():
+                raise ServicioNoDisponibleError("El servicio no está disponible")
+
             self.costo_total = self.calcular_costo_total()
-        except ReservaError as e:
-            raise ReservaError(f"Error al confirmar reserva: {str(e)}")
+            self.estado = EstadoReserva.CONFIRMADA
+
+        except (ReservaYaConfirmadaError, ReservaYaCanceladaError, ServicioNoDisponibleError, ReservaError):
+            raise
+        except Exception as e:
+            raise ReservaError("Error inesperado al confirmar reserva") from e
+        else:
+            return self.costo_total
+        finally:
+            self.fecha_procesamiento = datetime.now()
 
     def cancelar(self):
-        """
-        Cancela la reserva.
+        try:
+            if self.estado == EstadoReserva.CANCELADA:
+                raise ReservaYaCanceladaError("La reserva ya fue cancelada")
 
-        Raises:
-            ReservaError: Si la reserva ya estaba cancelada
-        """
-        if self.estado == "Cancelada":
-            raise ReservaError("La reserva ya fue cancelada")
+            self.estado = EstadoReserva.CANCELADA
+            self.costo_total = 0
 
-        self.estado = "Cancelada"
-        self.costo_total = 0
+        except ReservaYaCanceladaError:
+            raise
+        except Exception as e:
+            raise ReservaError("Error inesperado al cancelar reserva") from e
 
     def calcular_costo_total(self):
-        """
-        Calcula el costo total de la reserva.
-
-        Returns:
-            float: Costo total de la reserva
-        """
         try:
             costo_base = self.servicio.calcular_costo()
             return costo_base * self.duracion
         except Exception as e:
-            raise ReservaError(f"Error al calcular costo: {str(e)}")
+            raise CalculoCostoError("Error al calcular el costo total") from e
+
+    def procesar(self):
+        try:
+            if self.estado == EstadoReserva.CANCELADA:
+                raise ReservaYaCanceladaError("No se puede procesar una reserva cancelada")
+
+            if self.estado == EstadoReserva.PROCESADA:
+                return self.costo_total
+
+            self.confirmar()
+            self.estado = EstadoReserva.PROCESADA
+
+        except ReservaError:
+            raise
+        except Exception as e:
+            raise ReservaError("Error inesperado al procesar reserva") from e
+        else:
+            return self.costo_total
+        finally:
+            self.fecha_procesamiento = datetime.now()
 
     def obtener_estado(self):
-        """Obtiene el estado actual de la reserva"""
         return self.estado
 
     def obtener_id(self):
-        """Obtiene el ID de la reserva"""
         return self.id_reserva
 
-    def mostrar_reserva(self):
-        """
-        Muestra la información completa de la reserva.
+    def get_cliente(self):
+        return self.cliente
 
-        Returns:
-            str: Información formateada de la reserva
-        """
+    def get_servicio(self):
+        return self.servicio
+
+    def modificar_duracion(self, nueva_duracion):
+        if self.estado != EstadoReserva.PENDIENTE:
+            raise ReservaError(f"No se puede modificar una reserva {self.estado.value.lower()}")
+
+        if nueva_duracion <= 0:
+            raise ReservaError("La duración debe ser mayor a 0")
+
+        self.duracion = nueva_duracion
+
+    def modificar_servicio(self, nuevo_servicio):
+        if self.estado != EstadoReserva.PENDIENTE:
+            raise ReservaError(f"No se puede modificar una reserva {self.estado.value.lower()}")
+
+        if nuevo_servicio is None:
+            raise ReservaError("El servicio no puede ser None")
+
+        self.servicio = nuevo_servicio
+
+    def mostrar_reserva(self):
         try:
             costo_display = f"${self.costo_total}" if self.costo_total is not None else "No calculado"
-
             return (
                 f"[ID: {self.id_reserva}] "
                 f"{self.cliente.mostrar_datos()} | "
                 f"Servicio: {self.servicio.nombre} | "
                 f"Descripción: {self.servicio.descripcion()} | "
                 f"Duración: {self.duracion} | "
-                f"Estado: {self.estado} | "
+                f"Estado: {self.estado.value} | "
                 f"Costo Total: {costo_display} | "
-                f"Fecha: {self.fecha_creacion.strftime('%Y-%m-%d %H:%M:%S')}"
+                f"Fecha creación: {self.fecha_creacion.strftime('%Y-%m-%d %H:%M:%S')}"
             )
         except Exception as e:
-            raise ReservaError(f"Error al mostrar reserva: {str(e)}")
+            raise ReservaError("Error al mostrar reserva") from e

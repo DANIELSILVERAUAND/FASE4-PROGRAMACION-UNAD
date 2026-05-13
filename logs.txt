@@ -74,3 +74,34 @@
 2026-05-12 19:35:55,715 - ERROR - Error de Cliente en simulación 8: La edad debe ser numérica
 2026-05-12 19:35:55,715 - ERROR - Error de Servicio en simulación 9: Los días deben ser mayores a 0
 2026-05-12 19:35:55,716 - INFO - Simulación 10 completada exitosamente
+2026-05-12 19:54:51,594 - INFO - Simulación 1 completada exitosamente
+2026-05-12 19:54:51,595 - ERROR - Error de Cliente en simulación 2: El cliente debe ser mayor de edad
+2026-05-12 19:54:51,596 - ERROR - Error de Cliente en simulación 3: El nombre no puede estar vacío
+2026-05-12 19:54:51,596 - ERROR - Error de Servicio en simulación 4: Las horas deben ser mayores a 0
+2026-05-12 19:54:51,597 - INFO - Simulación 5 completada exitosamente
+2026-05-12 19:54:51,598 - INFO - Simulación 6 completada exitosamente
+2026-05-12 19:54:51,598 - ERROR - Error de Reserva en simulación 7: Debe existir un cliente para crear una reserva
+2026-05-12 19:54:51,598 - ERROR - Error de Cliente en simulación 8: La edad debe ser numérica
+2026-05-12 19:54:51,599 - ERROR - Error de Servicio en simulación 9: Los días deben ser mayores a 0
+2026-05-12 19:54:51,599 - INFO - Simulación 10 completada exitosamente
+2026-05-12 20:07:06,887 - INFO - Simulación 1 completada exitosamente
+2026-05-12 20:07:06,890 - INFO - Simulación 2 completada exitosamente
+2026-05-12 20:07:06,890 - ERROR - Error de Cliente en simulación 3: El nombre del cliente no puede estar vacío
+2026-05-12 20:07:06,890 - ERROR - Error de Cliente en simulación 4: El correo electrónico no es válido
+2026-05-12 20:07:06,891 - INFO - Simulación 5 completada exitosamente
+2026-05-12 20:07:06,892 - INFO - Simulación 6 completada exitosamente
+2026-05-12 20:07:06,892 - ERROR - Error de Reserva en simulación 7: Debe existir un servicio para crear una reserva
+2026-05-12 20:07:06,892 - ERROR - Error de Servicio en simulación 8: Los días deben ser mayores a 0
+2026-05-12 20:07:06,893 - ERROR - Error de Reserva en simulación 9: La reserva ya fue confirmada
+2026-05-12 20:07:06,894 - INFO - Simulación 10 completada exitosamente
+2026-05-12 20:14:12,568 - INFO - Simulación 1 completada exitosamente
+2026-05-12 20:14:12,568 - INFO - Simulación 2 completada exitosamente
+2026-05-12 20:14:12,569 - ERROR - Error de Cliente en simulación 3: El nombre del cliente no puede estar vacío
+2026-05-12 20:14:12,569 - ERROR - Error de Reserva en simulación 4: El servicio no está disponible
+2026-05-12 20:14:12,570 - INFO - Simulación 5 completada exitosamente
+2026-05-12 20:14:12,571 - INFO - Simulación 6 completada exitosamente
+2026-05-12 20:14:12,571 - ERROR - Error de Reserva en simulación 7: Debe existir un servicio para crear una reserva
+2026-05-12 20:14:12,572 - ERROR - Error de Servicio en simulación 8: Los días deben ser mayores a 0
+2026-05-12 20:14:12,572 - ERROR - Error de Reserva en simulación 9: La reserva ya fue confirmada
+2026-05-12 20:14:12,573 - INFO - Simulación 10 completada exitosamente
+2026-05-12 20:14:12,573 - INFO - Simulación 11 completada exitosamente
