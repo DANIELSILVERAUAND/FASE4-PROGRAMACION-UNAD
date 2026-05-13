@@ -4,7 +4,14 @@ from servicios_especiales import ReservaSala, AlquilerEquipo, Asesoria
 from excepciones import ClienteError, ServicioError, ReservaError
 
 import logging
+import os
 import logger_config
+import tkinter as tk
+from tkinter import ttk, scrolledtext, messagebox
+import io
+import contextlib
+
+LOG_FILE = logger_config.LOG_FILE
 
 clientes = []
 reservas = []
@@ -209,6 +216,226 @@ def simulacion_11():
     print(reserva.mostrar_reserva())
 
 
+def run_with_output(func, output_func):
+    buffer = io.StringIO()
+    with contextlib.redirect_stdout(buffer):
+        try:
+            func()
+        except Exception as e:
+            print(f"✗ ERROR: {type(e).__name__} - {e}")
+    output_func(buffer.getvalue())
+
+
+def format_text(text_widget, text):
+    text_widget.config(state="normal")
+    text_widget.insert(tk.END, text)
+    text_widget.see(tk.END)
+    text_widget.config(state="disabled")
+
+
+class ReservaApp:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Sistema de Reservas - Software FJ")
+        self.root.geometry("880x560")
+        self.root.minsize(820, 520)
+        self.root.configure(bg="#eaf0f7")
+
+        self.style = ttk.Style(root)
+        try:
+            self.style.theme_use("clam")
+        except tk.TclError:
+            pass
+
+        self.style.configure("Header.TLabel", font=("Segoe UI", 16, "bold"), background="#eaf0f7")
+        self.style.configure("Sidebar.TFrame", background="#f0f4f8")
+        self.style.configure("Card.TLabelframe", background="#ffffff", borderwidth=1, relief="solid")
+        self.style.configure("Card.TLabelframe.Label", font=("Segoe UI", 11, "bold"))
+        self.style.configure("TButton", font=("Segoe UI", 10), padding=8)
+        self.style.configure("TLabel", background="#eaf0f7")
+
+        self.root.columnconfigure(1, weight=1)
+        self.root.rowconfigure(0, weight=1)
+
+        sidebar = ttk.Frame(root, width=220, style="Sidebar.TFrame")
+        sidebar.grid(row=0, column=0, sticky="ns")
+        sidebar.grid_propagate(False)
+        sidebar.columnconfigure(0, weight=1)
+
+        header = ttk.Label(root, text="Sistema de Reservas - Software FJ", style="Header.TLabel")
+        header.grid(row=0, column=1, sticky="nw", padx=(10, 10), pady=(10, 0))
+
+        content_frame = ttk.Frame(root)
+        content_frame.grid(row=0, column=1, sticky="nsew", padx=(10, 10), pady=(55, 10))
+        content_frame.columnconfigure(0, weight=1)
+        content_frame.rowconfigure(0, weight=1)
+
+        action_frame = ttk.Labelframe(sidebar, text="Acciones", padding=12, style="Card.TLabelframe")
+        action_frame.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
+
+        ttk.Button(action_frame, text="Ejecutar simulaciones", command=self.execute_simulations).grid(row=0, column=0, sticky="ew", padx=5, pady=(0, 5))
+        ttk.Button(action_frame, text="Ver clientes", command=self.show_clients).grid(row=1, column=0, sticky="ew", padx=5, pady=5)
+        ttk.Button(action_frame, text="Ver reservas", command=self.show_reservations).grid(row=2, column=0, sticky="ew", padx=5, pady=5)
+        ttk.Button(action_frame, text="Ver logs", command=self.show_logs).grid(row=3, column=0, sticky="ew", padx=5, pady=5)
+        ttk.Button(action_frame, text="Borrar logs", command=self.clear_logs).grid(row=4, column=0, sticky="ew", padx=5, pady=5)
+        ttk.Button(action_frame, text="Salir", command=self.root.quit).grid(row=5, column=0, sticky="ew", padx=5, pady=5)
+
+        self.output_frame = ttk.Labelframe(content_frame, text="Salida del sistema", padding=12, style="Card.TLabelframe")
+        self.output_frame.grid(row=0, column=0, sticky="nsew")
+        self.output_frame.columnconfigure(0, weight=1)
+        self.output_frame.rowconfigure(0, weight=1)
+
+        self.output_text = scrolledtext.ScrolledText(self.output_frame, wrap=tk.WORD, state="disabled", font=("Consolas", 10), bg="#fafbfc", relief="flat")
+        self.output_text.grid(row=0, column=0, sticky="nsew")
+
+        self.footer_frame = ttk.Frame(root)
+        self.footer_frame.grid(row=1, column=0, columnspan=2, sticky="ew", padx=10, pady=(0, 10))
+        self.footer_frame.columnconfigure(0, weight=1)
+        self.footer_frame.columnconfigure(1, weight=1)
+
+        self.counts_label = ttk.Label(self.footer_frame, text="Clientes: 0 | Reservas: 0 | Logs: 0")
+        self.counts_label.grid(row=0, column=0, sticky="w")
+        self.status_label = ttk.Label(self.footer_frame, text="Listo", anchor="e")
+        self.status_label.grid(row=0, column=1, sticky="e")
+
+        self.root.bind("<Unmap>", self.on_window_state_change)
+        self.root.bind("<Map>", self.on_window_state_change)
+        self.update_counts()
+
+    def update_status(self, message):
+        self.status_label.config(text=message)
+
+    def clear_output(self):
+        self.output_text.config(state="normal")
+        self.output_text.delete("1.0", tk.END)
+        self.output_text.config(state="disabled")
+
+    def append_output(self, message):
+        format_text(self.output_text, message)
+
+    def get_log_count(self):
+        try:
+            with open(LOG_FILE, "r", encoding="utf-8") as archivo:
+                return len(archivo.readlines())
+        except (UnicodeDecodeError, FileNotFoundError):
+            try:
+                with open(LOG_FILE, "r", encoding="latin-1") as archivo:
+                    return len(archivo.readlines())
+            except Exception:
+                return 0
+
+    def update_counts(self):
+        self.counts_label.config(text=f"Clientes: {len(clientes)} | Reservas: {len(reservas)} | Logs: {self.get_log_count()}")
+
+    def execute_simulations(self):
+        self.clear_output()
+        self.update_status("Ejecutando simulaciones...")
+        clientes.clear()
+        reservas.clear()
+
+        def task():
+            ejecutar_simulacion(1, simulacion_1)
+            ejecutar_simulacion(2, simulacion_2)
+            ejecutar_simulacion(3, simulacion_3)
+            ejecutar_simulacion(4, simulacion_4)
+            ejecutar_simulacion(5, simulacion_5)
+            ejecutar_simulacion(6, simulacion_6)
+            ejecutar_simulacion(7, simulacion_7)
+            ejecutar_simulacion(8, simulacion_8)
+            ejecutar_simulacion(9, simulacion_9)
+            ejecutar_simulacion(10, simulacion_10)
+            ejecutar_simulacion(11, simulacion_11)
+
+        run_with_output(task, self.append_output)
+        self.update_status("Simulaciones ejecutadas")
+        self.update_counts()
+
+    def show_clients(self):
+        self.clear_output()
+        self.update_status("Mostrando clientes registrados...")
+
+        def task():
+            print("===== CLIENTES REGISTRADOS =====")
+            if len(clientes) == 0:
+                print("No hay clientes registrados")
+            else:
+                for cliente in clientes:
+                    print(cliente.mostrar_datos())
+
+        run_with_output(task, self.append_output)
+        self.update_status("Clientes mostrados")
+        self.update_counts()
+
+    def show_reservations(self):
+        self.clear_output()
+        self.update_status("Mostrando reservas registradas...")
+
+        def task():
+            print("===== RESERVAS REGISTRADAS =====")
+            if len(reservas) == 0:
+                print("No hay reservas registradas")
+            else:
+                for reserva in reservas:
+                    print(reserva.mostrar_reserva())
+
+        run_with_output(task, self.append_output)
+        self.update_status("Reservas mostradas")
+        self.update_counts()
+
+    def show_logs(self):
+        self.clear_output()
+        self.update_status("Cargando logs...")
+
+        def read_logs():
+            try:
+                with open(LOG_FILE, "r", encoding="utf-8") as archivo:
+                    return archivo.read()
+            except UnicodeDecodeError:
+                with open(LOG_FILE, "r", encoding="latin-1") as archivo:
+                    return archivo.read()
+
+        def task():
+            print("===== LOGS DEL SISTEMA =====")
+            try:
+                contenido = read_logs()
+                print(contenido if contenido else "No hay registros de logs")
+            except FileNotFoundError:
+                print("Archivo de logs no encontrado")
+            except Exception as e:
+                print(f"No se pudo leer el archivo de logs: {e}")
+                logging.error(f"Error al leer logs: {e}")
+
+        run_with_output(task, self.append_output)
+        self.update_status("Logs cargados")
+        self.update_counts()
+
+    def clear_logs(self):
+        if not messagebox.askyesno("Confirmar", "¿Desea borrar todos los logs?"):
+            return
+        try:
+            with open(LOG_FILE, "w", encoding="utf-8") as archivo:
+                archivo.write("")
+            self.append_output("Logs borrados correctamente\n")
+            self.update_status("Logs borrados")
+            self.update_counts()
+        except Exception as e:
+            self.append_output(f"No se pudo borrar el archivo de logs: {e}\n")
+            logging.error(f"Error al borrar logs: {e}")
+            self.update_status("Error borrando logs")
+
+    def on_window_state_change(self, event):
+        if str(self.root.state()) == "iconic":
+            self.update_status("Ventana minimizada")
+        else:
+            self.update_status("Listo")
+
+
+def main_gui():
+    root = tk.Tk()
+    ReservaApp(root)
+    root.mainloop()
+
+
 # MENÚ PRINCIPAL
 
 def menu():
@@ -312,5 +539,4 @@ def menu():
 
 
 if __name__ == "__main__":
-
-    menu()
+    main_gui()
